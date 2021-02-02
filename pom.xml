@@ -15,13 +15,9 @@
   <description>flowableDemo project for Spring Boot</description>
   <properties>
     <java.version>1.8</java.version>
+    <swagger.version>2.9.2</swagger.version>
   </properties>
   <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
@@ -32,18 +28,31 @@
       <artifactId>lombok</artifactId>
       <optional>true</optional>
     </dependency>
+
+    <dependency>
+      <groupId>org.flowable</groupId>
+      <artifactId>flowable-spring-boot-starter-rest</artifactId>
+      <version>6.6.0</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
 
+    <!-- swagger -->
     <dependency>
-      <groupId>org.flowable</groupId>
-      <artifactId>flowable-spring-boot-starter</artifactId>
-      <version>6.6.0</version>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>${swagger.version}</version>
     </dependency>
-  </dependencies>
+
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>${swagger.version}</version>
+    </dependency>
+</dependencies>
 
   <build>
     <plugins>
