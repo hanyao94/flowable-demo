@@ -1,4 +1,4 @@
-package com.flowable.demo.config;
+package com.flowable.demo.infrastructure.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

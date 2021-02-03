@@ -7,7 +7,7 @@
  * 修改历史：
  * 2021/2/1 - seven - 创建。
  */
-package com.flowable.demo.controller;
+package com.flowable.demo.application.controller;
 
 import com.flowable.demo.domain.service.MyService;
 import io.swagger.annotations.Api;
