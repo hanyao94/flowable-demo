@@ -7,7 +7,7 @@
  * 修改历史：
  * 2021/2/4 - seven - 创建。
  */
-package com.flowable.demo.infrastructure.flowable;
+package com.flowable.demo.infrastructure.flowable.entity;
 
 import lombok.Getter;
 

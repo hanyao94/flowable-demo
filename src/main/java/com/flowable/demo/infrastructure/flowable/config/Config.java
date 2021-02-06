@@ -7,7 +7,7 @@
  * 修改历史：
  * 2021/2/3 - seven - 创建。
  */
-package com.flowable.demo.infrastructure.flowable;
+package com.flowable.demo.infrastructure.flowable.config;
 
 import org.springframework.context.annotation.Configuration;
 
