@@ -56,11 +56,10 @@ public class PurchaseOrderController {
   @RequestMapping(value = "/submit", method = RequestMethod.POST)
   public String submit(@ApiParam(required = true) @PathVariable("tenant") String tenant,
                        @ApiParam(required = true, value = "采购单ID") @RequestParam("purchaseOrderId") String purchaseOrderId,
-                       @ApiParam(required = true, value = "操作上下文") @RequestParam("operator") String operator) {
+                       @ApiParam(required = true, value = "操作上下文") @RequestParam("operator") String operator) throws NoSuchMethodException {
 
-    PurchaseOrder order = purchaseOrderService.get(tenant, purchaseOrderId);
-    purchaseOrderService.submit(order, operator);
-    return order.getId();
+    PurchaseOrder purchaseOrder = purchaseOrderService.submit(tenant, purchaseOrderId, operator);
+    return purchaseOrder.getId();
   }
 
   @ApiOperation(value = "审核通过")

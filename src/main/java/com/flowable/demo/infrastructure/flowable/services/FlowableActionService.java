@@ -9,15 +9,70 @@
  */
 package com.flowable.demo.infrastructure.flowable.services;
 
+import com.flowable.demo.infrastructure.flowable.port.process.ProcessInstanceCollectionClient;
+import com.flowable.demo.infrastructure.flowable.port.task.TaskCollectionClient;
+import com.flowable.demo.infrastructure.flowable.port.task.TaskQueryClient;
+import com.flowable.demo.infrastructure.flowable.repository.ModuleProcessDefinitionRepository;
+import com.flowable.demo.infrastructure.flowable.repository.OrderTaskRelationRepository;
+import com.flowable.demo.infrastructure.flowable.repository.PModuleProcessDefinition;
+import com.flowable.demo.infrastructure.flowable.repository.POrderTaskRelation;
+import org.flowable.common.rest.api.DataResponse;
+import org.flowable.rest.service.api.runtime.process.ProcessInstanceCreateRequest;
+import org.flowable.rest.service.api.runtime.process.ProcessInstanceResponse;
+import org.flowable.rest.service.api.runtime.task.TaskResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author seven
  */
 public abstract class FlowableActionService<T> {
 
-  public void submit(T order, String operator) {
+  @Autowired
+  private HttpServletRequest httpServletRequest;
+  @Autowired
+  private HttpServletResponse httpServletResponse;
+  @Autowired
+  private OrderTaskRelationRepository orderTaskRelationRepository;
+  @Autowired
+  private ModuleProcessDefinitionRepository moduleProcessDefinitionRepository;
+  @Autowired
+  private ProcessInstanceCollectionClient processInstanceCollectionClient;
+  @Autowired
+  private TaskCollectionClient taskCollectionClient;
+  @Autowired
+  private TaskQueryClient taskQueryClient;
+
+  public T submit(String tenant, String orderId, String operator) throws NoSuchMethodException {
     // TODO 启动一个流程实例，通过返回的id，使用/runtime/tasks 接口的processInstanceId = id 获取对应的任务，绑定任务executionId 和单据id
+
+    // 通过方法返回值获取模块ID，模块ID与流程定义Key值进行绑定
+    PModuleProcessDefinition moduleProcessDefinition = moduleProcessDefinitionRepository.findByModuleId(getClass().getDeclaredMethod("submit").getReturnType().getName());
+
+    ProcessInstanceCreateRequest request = new ProcessInstanceCreateRequest();
+    request.setProcessDefinitionKey(moduleProcessDefinition.getProcessDefinitionKey());
+    ProcessInstanceResponse processInstance = processInstanceCollectionClient.createProcessInstance(request, httpServletRequest, httpServletResponse);
+
+    Map<String, String> requestParams = new HashMap<>();
+    requestParams.put("processInstanceId", processInstance.getId());
+    DataResponse<TaskResponse> taskResponse = taskCollectionClient.getTasks(requestParams, httpServletRequest);
+    if (CollectionUtils.isEmpty(taskResponse.getData())) {
+      return null;
+    }
+
+    String taskExecutionId = taskResponse.getData().get(0).getExecutionId();
+    POrderTaskRelation taskRelation = new POrderTaskRelation();
+    taskRelation.setOrderId(orderId);
+    taskRelation.setExecutionId(taskExecutionId);
+    orderTaskRelationRepository.save(taskRelation);
+
+    return null;
   }
 
   public void accepted(String tenant, String orderId, String operator) {

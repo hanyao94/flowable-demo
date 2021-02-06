@@ -16,3 +16,9 @@ spring:
       ddl-auto: update
     show-sql: true
 
+## 认证&地址
+flowable-service:
+  rest:
+    url: http://39.108.217.19:6101/
+    username: rest-admin
+    password: test

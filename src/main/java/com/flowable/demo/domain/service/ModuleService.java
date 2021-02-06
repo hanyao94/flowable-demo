@@ -11,10 +11,10 @@ package com.flowable.demo.domain.service;
 
 import com.flowable.demo.application.controller.module.Module;
 import com.flowable.demo.application.controller.module.ModuleProcessDefinition;
-import com.flowable.demo.domain.dao.ModuleProcessDefinitionRepository;
+import com.flowable.demo.infrastructure.flowable.repository.ModuleProcessDefinitionRepository;
 import com.flowable.demo.domain.dao.ModuleRepository;
 import com.flowable.demo.domain.dao.PModule;
-import com.flowable.demo.domain.dao.PModuleProcessDefinition;
+import com.flowable.demo.infrastructure.flowable.repository.PModuleProcessDefinition;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -45,12 +45,15 @@ public class PurchaseOrderService extends FlowableActionService<PurchaseOrder> {
   }
 
   @Override
-  public void submit(PurchaseOrder order, String operator) {
-    PPurchaseOrder update = purchaseOrderRepository.findPPurchaseOrderByTenantAndId(order.getTenant(), order.getId());
+  public PurchaseOrder submit(String tenant, String orderId, String operator) throws NoSuchMethodException {
+    PPurchaseOrder update = purchaseOrderRepository.findPPurchaseOrderByTenantAndId(tenant, orderId);
     update.setState(PurchaseState.pending.getCode());
     purchaseOrderRepository.save(update);
+    PurchaseOrder target = new PurchaseOrder();
+    BeanUtils.copyProperties(update,target);
 
-    super.submit(order, operator);
+    super.submit(tenant, orderId, operator);
+    return  target;
   }
 
   @Override

@@ -7,7 +7,7 @@
  * 修改历史：
  * 2021/2/5 - seven - 创建。
  */
-package com.flowable.demo.domain.dao;
+package com.flowable.demo.infrastructure.flowable.repository;
 
 import lombok.Getter;
 import lombok.Setter;

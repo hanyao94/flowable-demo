@@ -7,7 +7,7 @@
  * 修改历史：
  * 2021/2/6 - seven - 创建。
  */
-package com.flowable.demo.domain.dao;
+package com.flowable.demo.infrastructure.flowable.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author seven
  */
 public interface ModuleProcessDefinitionRepository extends JpaRepository<PModuleProcessDefinition, String> {
+
+  PModuleProcessDefinition findByModuleId(String moduleId);
 }
