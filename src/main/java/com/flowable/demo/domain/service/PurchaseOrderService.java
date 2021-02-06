@@ -9,6 +9,7 @@
  */
 package com.flowable.demo.domain.service;
 
+import com.flowable.demo.application.controller.purchase.PurchaseOrder;
 import com.flowable.demo.domain.dao.PurchaseOrderRepository;
 import com.flowable.demo.infrastructure.flowable.services.FlowableActionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ import java.util.List;
  * @author seven
  */
 @Service
-public class PurchaseOrderService extends FlowableActionService {
+public class PurchaseOrderService extends FlowableActionService<PurchaseOrder> {
 
   @Autowired
   private PurchaseOrderRepository purchaseOrderRepository;
 
   @Override
-  public void submit(Object order, String operator) {
+  public void submit(PurchaseOrder order, String operator) {
     // TODO 业务
     super.submit(order,operator);
   }
