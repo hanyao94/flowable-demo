@@ -7,7 +7,7 @@
  * 修改历史：
  * 2021/2/1 - seven - 创建。
  */
-package com.flowable.demo.application.controller;
+package com.flowable.demo.application.controller.test;
 
 /**
  * @author seven
