@@ -28,7 +28,7 @@ public abstract class FlowableActionService<T> {
 
   }
 
-  public List<T> queryForApproving(String tenant, String operator) {
+  public List<String> queryForApproving(String tenant, String operator) {
     // TODO 通过assignee 获取待审核 List<task> =>List<executionId> 得到executionId列表(唯一),建立executionId和单据id的关联表，并取到对应单据
     return null;
   }

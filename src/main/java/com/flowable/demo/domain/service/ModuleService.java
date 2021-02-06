@@ -15,16 +15,9 @@ import com.flowable.demo.domain.dao.ModuleProcessDefinitionRepository;
 import com.flowable.demo.domain.dao.ModuleRepository;
 import com.flowable.demo.domain.dao.PModule;
 import com.flowable.demo.domain.dao.PModuleProcessDefinition;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author seven
@@ -49,7 +42,7 @@ public class ModuleService {
   public String bindProcessDefinition(ModuleProcessDefinition moduleProcessDefinition) {
     PModuleProcessDefinition target = new PModuleProcessDefinition();
     BeanUtils.copyProperties(moduleProcessDefinition, target);
-    PModuleProcessDefinition saveTargt = moduleProcessDefinitionRepository.save(target);
-    return saveTargt.getUuid();
+    PModuleProcessDefinition saveTarget = moduleProcessDefinitionRepository.save(target);
+    return saveTarget.getUuid();
   }
 }

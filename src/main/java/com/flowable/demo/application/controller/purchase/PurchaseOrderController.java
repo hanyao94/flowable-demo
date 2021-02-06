@@ -9,9 +9,11 @@
  */
 package com.flowable.demo.application.controller.purchase;
 
+import com.flowable.demo.domain.service.PurchaseOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,21 +32,24 @@ import java.util.List;
 @RequestMapping(value = "{tenant}/purchase-order", produces = "application/json;charset=utf-8")
 public class PurchaseOrderController {
 
+  @Autowired
+  private PurchaseOrderService purchaseOrderService;
+
   @ApiOperation(value = "创建采购单")
   @RequestMapping(value = "/create", method = RequestMethod.POST)
   public String create(@ApiParam(required = true) @PathVariable("tenant") String tenant,
                        @ApiParam(required = true, value = "采购单") @RequestBody PurchaseOrder purchaseOrder,
                        @ApiParam(required = true, value = "操作上下文") @RequestParam("operator") String operator) {
 
-    return null;
+    return purchaseOrderService.create(purchaseOrder, tenant);
   }
 
   @ApiOperation(value = "获取采购单")
   @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
-  public String get(@ApiParam(required = true) @PathVariable("tenant") String tenant,
-                    @ApiParam(required = true, value = "采购单ID") @PathVariable("orderId") String orderId) {
+  public PurchaseOrder get(@ApiParam(required = true) @PathVariable("tenant") String tenant,
+                           @ApiParam(required = true, value = "采购单ID") @PathVariable("orderId") String orderId) {
 
-    return null;
+    return purchaseOrderService.get(tenant, orderId);
   }
 
   @ApiOperation(value = "提交采购单")
@@ -53,7 +58,9 @@ public class PurchaseOrderController {
                        @ApiParam(required = true, value = "采购单ID") @RequestParam("purchaseOrderId") String purchaseOrderId,
                        @ApiParam(required = true, value = "操作上下文") @RequestParam("operator") String operator) {
 
-    return null;
+    PurchaseOrder order = purchaseOrderService.get(tenant, purchaseOrderId);
+    purchaseOrderService.submit(order, operator);
+    return order.getId();
   }
 
   @ApiOperation(value = "审核通过")
@@ -62,7 +69,8 @@ public class PurchaseOrderController {
                          @ApiParam(required = true, value = "采购单ID") @RequestParam("purchaseOrderId") String purchaseOrderId,
                          @ApiParam(required = true, value = "操作上下文") @RequestParam("operator") String operator) {
 
-    return null;
+    purchaseOrderService.accepted(tenant, purchaseOrderId, operator);
+    return purchaseOrderId;
   }
 
   @ApiOperation(value = "审核驳回")
@@ -71,15 +79,15 @@ public class PurchaseOrderController {
                          @ApiParam(required = true, value = "采购单ID") @RequestParam("purchaseOrderId") String purchaseOrderId,
                          @ApiParam(required = true, value = "操作上下文") @RequestParam("operator") String operator) {
 
-    return null;
+    purchaseOrderService.rejected(tenant, purchaseOrderId, operator);
+    return purchaseOrderId;
   }
 
   @ApiOperation(value = "查询待审核")
   @RequestMapping(value = "/query-for-approve", method = RequestMethod.GET)
   public List<PurchaseOrder> queryForApproving(@ApiParam(required = true) @PathVariable("tenant") String tenant,
                                                @ApiParam(required = true, value = "操作人") @RequestParam("operator") String operator) {
-
-    return null;
+    return purchaseOrderService.query(tenant, operator);
   }
 
 }
