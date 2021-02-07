@@ -14,5 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * @author seven
  */
-public interface OrderTaskRelationRepository extends JpaRepository<POrderTaskRelation,String> {
+public interface OrderTaskRelationRepository extends JpaRepository<POrderTaskRelation, String> {
+  POrderTaskRelation findByOrderId(String orderId);
 }
