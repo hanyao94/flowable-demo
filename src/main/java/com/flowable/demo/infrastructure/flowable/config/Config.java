@@ -9,6 +9,9 @@
  */
 package com.flowable.demo.infrastructure.flowable.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.flowable.rest.service.api.RestResponseFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -16,4 +19,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class Config {
+
+  @Bean
+  public RestResponseFactory getRestResponseFactory(ObjectMapper objectMapper){
+    return new RestResponseFactory(objectMapper);
+  }
 }

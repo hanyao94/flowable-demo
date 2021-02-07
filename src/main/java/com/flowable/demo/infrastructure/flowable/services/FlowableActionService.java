@@ -18,12 +18,15 @@ import com.flowable.demo.infrastructure.flowable.repository.OrderTaskRelationRep
 import com.flowable.demo.infrastructure.flowable.repository.PModuleProcessDefinition;
 import com.flowable.demo.infrastructure.flowable.repository.POrderTaskRelation;
 import org.flowable.common.rest.api.DataResponse;
+import org.flowable.engine.TaskService;
+import org.flowable.engine.impl.TaskServiceImpl;
 import org.flowable.rest.service.api.engine.variable.RestVariable;
 import org.flowable.rest.service.api.runtime.process.ProcessInstanceCreateRequest;
 import org.flowable.rest.service.api.runtime.process.ProcessInstanceResponse;
 import org.flowable.rest.service.api.runtime.task.TaskActionRequest;
 import org.flowable.rest.service.api.runtime.task.TaskResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -134,7 +137,6 @@ public abstract class FlowableActionService<T> {
 
   public List<String> queryForApproving(String tenant, String operator) {
     // TODO 通过assignee 获取待审核 List<task> =>List<executionId> 得到executionId列表(唯一),建立executionId和单据id的关联表，并取到对应单据
-
 
     return null;
   }

@@ -13,11 +13,13 @@ import com.flowable.demo.infrastructure.flowable.port.FlowableFeignConfiguration
 import org.flowable.rest.service.api.repository.ProcessDefinitionCollectionResource;
 import org.flowable.rest.service.api.runtime.process.ProcessInstanceCollectionResource;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author seven
  */
+@Component
 @FeignClient(name = "flowable-rest-service", url = "${flowable-service.rest.url:}", decode404 = true, configuration = FlowableFeignConfiguration.class)
 @RequestMapping(value = "flowable-rest/service", produces = "application/json;charset=utf-8")
 public class ProcessInstanceCollectionClient extends ProcessInstanceCollectionResource {
