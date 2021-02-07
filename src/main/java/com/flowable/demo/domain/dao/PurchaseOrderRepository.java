@@ -10,12 +10,14 @@
 package com.flowable.demo.domain.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author seven
  */
+@Repository
 public interface PurchaseOrderRepository extends JpaRepository<PPurchaseOrder, String> {
 
   PPurchaseOrder findPPurchaseOrderByTenantAndId(String tenant, String id);

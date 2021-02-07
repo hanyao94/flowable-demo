@@ -18,15 +18,12 @@ import com.flowable.demo.infrastructure.flowable.repository.OrderTaskRelationRep
 import com.flowable.demo.infrastructure.flowable.repository.PModuleProcessDefinition;
 import com.flowable.demo.infrastructure.flowable.repository.POrderTaskRelation;
 import org.flowable.common.rest.api.DataResponse;
-import org.flowable.engine.TaskService;
-import org.flowable.engine.impl.TaskServiceImpl;
 import org.flowable.rest.service.api.engine.variable.RestVariable;
 import org.flowable.rest.service.api.runtime.process.ProcessInstanceCreateRequest;
 import org.flowable.rest.service.api.runtime.process.ProcessInstanceResponse;
 import org.flowable.rest.service.api.runtime.task.TaskActionRequest;
 import org.flowable.rest.service.api.runtime.task.TaskResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +59,7 @@ public abstract class FlowableActionService<T> {
     // TODO 启动一个流程实例，通过返回的id，使用/runtime/tasks 接口的processInstanceId = id 获取对应的任务，绑定任务executionId 和单据id
 
     // 通过方法返回值获取模块ID，模块ID与流程定义Key值进行绑定
-    PModuleProcessDefinition moduleProcessDefinition = moduleProcessDefinitionRepository.findByModuleId(getClass().getDeclaredMethod("submit").getReturnType().getName());
+    PModuleProcessDefinition moduleProcessDefinition = moduleProcessDefinitionRepository.findByModuleId(getClass().getDeclaredMethod("submit",String.class,String.class,String.class).getReturnType().getSimpleName());
 
     // 启动流程
     ProcessInstanceCreateRequest request = new ProcessInstanceCreateRequest();

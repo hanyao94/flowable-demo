@@ -10,10 +10,10 @@
 package com.flowable.demo.domain.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author seven
  */
-public interface ModuleRepository extends JpaRepository<PModule,String> {
-
-}
+@Repository
+public interface ModuleRepository extends JpaRepository<PModule,String> {}

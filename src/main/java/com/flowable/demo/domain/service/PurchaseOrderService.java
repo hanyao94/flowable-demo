@@ -53,7 +53,7 @@ public class PurchaseOrderService extends FlowableActionService<PurchaseOrder> {
     BeanUtils.copyProperties(update,target);
 
     super.submit(tenant, orderId, operator);
-    return  target;
+    return  null;
   }
 
   @Override

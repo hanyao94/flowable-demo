@@ -11,6 +11,9 @@ package com.flowable.demo.infrastructure.flowable.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.flowable.rest.service.api.RestResponseFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,7 +24,26 @@ import org.springframework.context.annotation.Configuration;
 public class Config {
 
   @Bean
-  public RestResponseFactory getRestResponseFactory(ObjectMapper objectMapper){
+  @ConditionalOnMissingBean
+  public RestResponseFactory getRestResponseFactory(ObjectMapper objectMapper) {
     return new RestResponseFactory(objectMapper);
   }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public JpaProperties jpaProperties() {
+    JpaProperties jpaProperties = new JpaProperties();
+    jpaProperties.setShowSql(true);
+    jpaProperties.getProperties().put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+    return jpaProperties;
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public HibernateProperties hibernateProperties() {
+    HibernateProperties hibernateProperties = new HibernateProperties();
+    hibernateProperties.setDdlAuto("update");
+    return hibernateProperties;
+  }
+
 }
