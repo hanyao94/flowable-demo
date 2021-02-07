@@ -61,10 +61,12 @@ public abstract class FlowableActionService<T> {
     // 通过方法返回值获取模块ID，模块ID与流程定义Key值进行绑定
     PModuleProcessDefinition moduleProcessDefinition = moduleProcessDefinitionRepository.findByModuleId(getClass().getDeclaredMethod("submit").getReturnType().getName());
 
+    // 启动流程
     ProcessInstanceCreateRequest request = new ProcessInstanceCreateRequest();
     request.setProcessDefinitionKey(moduleProcessDefinition.getProcessDefinitionKey());
     ProcessInstanceResponse processInstance = processInstanceCollectionClient.createProcessInstance(request, httpServletRequest, httpServletResponse);
 
+    // 获取流程实例对应的任务task
     Map<String, String> requestParams = new HashMap<>();
     requestParams.put("processInstanceId", processInstance.getId());
     DataResponse<TaskResponse> taskResponse = taskCollectionClient.getTasks(requestParams, httpServletRequest);
@@ -72,6 +74,7 @@ public abstract class FlowableActionService<T> {
       return null;
     }
 
+    // 拿到任务task对应的executeId(在运行过程中唯一) 绑定单据Id
     String taskExecutionId = taskResponse.getData().get(0).getExecutionId();
     POrderTaskRelation taskRelation = new POrderTaskRelation();
     taskRelation.setOrderId(orderId);
