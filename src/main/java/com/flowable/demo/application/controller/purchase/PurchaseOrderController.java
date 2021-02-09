@@ -27,7 +27,7 @@ import java.util.List;
  * @author seven
  */
 
-@Api("采购单服务")
+@Api(tags = "采购单服务")
 @RestController
 @RequestMapping(value = "{tenant}/purchase-order", produces = "application/json;charset=utf-8")
 public class PurchaseOrderController {
@@ -41,7 +41,7 @@ public class PurchaseOrderController {
                        @ApiParam(required = true, value = "采购单") @RequestBody PurchaseOrder purchaseOrder,
                        @ApiParam(required = true, value = "操作上下文") @RequestParam("operator") String operator) {
 
-    return purchaseOrderService.create(purchaseOrder, tenant);
+    return purchaseOrderService.create(purchaseOrder, operator);
   }
 
   @ApiOperation(value = "获取采购单")
@@ -56,10 +56,10 @@ public class PurchaseOrderController {
   @RequestMapping(value = "/submit", method = RequestMethod.POST)
   public String submit(@ApiParam(required = true) @PathVariable("tenant") String tenant,
                        @ApiParam(required = true, value = "采购单ID") @RequestParam("purchaseOrderId") String purchaseOrderId,
-                       @ApiParam(required = true, value = "操作上下文") @RequestParam("operator") String operator) throws NoSuchMethodException {
+                       @ApiParam(required = true, value = "操作上下文") @RequestParam("operator") String operator) {
 
-    PurchaseOrder purchaseOrder = purchaseOrderService.submit(tenant, purchaseOrderId, operator);
-    return purchaseOrder.getId();
+    purchaseOrderService.submit(tenant, purchaseOrderId, operator);
+    return purchaseOrderId;
   }
 
   @ApiOperation(value = "审核通过")

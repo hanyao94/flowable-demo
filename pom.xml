@@ -31,7 +31,7 @@
 
     <dependency>
       <groupId>org.flowable</groupId>
-      <artifactId>flowable-spring-boot-starter-rest</artifactId>
+      <artifactId>flowable-spring-boot-starter-process-rest</artifactId>
       <version>6.6.0</version>
     </dependency>
     <dependency>

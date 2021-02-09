@@ -12,10 +12,14 @@ package com.flowable.demo.infrastructure.flowable.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author seven
  */
 @Repository
 public interface OrderTaskRelationRepository extends JpaRepository<POrderTaskRelation, String> {
   POrderTaskRelation findByOrderId(String orderId);
+
+  List<POrderTaskRelation> findByExecutionIdIn(List<String> executionIds);
 }

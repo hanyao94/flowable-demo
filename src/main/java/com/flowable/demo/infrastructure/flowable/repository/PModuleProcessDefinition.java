@@ -11,6 +11,7 @@ package com.flowable.demo.infrastructure.flowable.repository;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,9 +26,10 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table(name = "t_module_process_definition")
+@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class PModuleProcessDefinition {
   @Id
-  @GeneratedValue(generator="system-uuid")
+  @GeneratedValue(generator="jpa-uuid")
   private String uuid;
   @Column(name = "moduleId", length = 38)
   private String moduleId;

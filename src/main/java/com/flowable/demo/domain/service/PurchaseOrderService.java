@@ -17,6 +17,7 @@ import com.flowable.demo.infrastructure.flowable.services.FlowableActionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,15 +46,14 @@ public class PurchaseOrderService extends FlowableActionService<PurchaseOrder> {
   }
 
   @Override
-  public PurchaseOrder submit(String tenant, String orderId, String operator) throws NoSuchMethodException {
+  public void submit(String tenant, String orderId, String operator) {
     PPurchaseOrder update = purchaseOrderRepository.findPPurchaseOrderByTenantAndId(tenant, orderId);
     update.setState(PurchaseState.pending.getCode());
     purchaseOrderRepository.save(update);
     PurchaseOrder target = new PurchaseOrder();
-    BeanUtils.copyProperties(update,target);
+    BeanUtils.copyProperties(update, target);
 
     super.submit(tenant, orderId, operator);
-    return  null;
   }
 
   @Override
@@ -70,13 +70,12 @@ public class PurchaseOrderService extends FlowableActionService<PurchaseOrder> {
     super.rejected(tenant, orderId, operator);
   }
 
-  @Override
-  public List<String> queryForApproving(String tenant, String operator) {
-    return super.queryForApproving(tenant, operator);
-  }
-
   public List<PurchaseOrder> query(String tenant, String operator) {
     List<String> orderIds = queryForApproving(tenant, operator);
+    if (CollectionUtils.isEmpty(orderIds)) {
+      return new ArrayList<>();
+    }
+
     List<PPurchaseOrder> orders = purchaseOrderRepository.findAllByIdIn(orderIds);
     List<PurchaseOrder> purchaseOrders = new ArrayList<>();
     for (PPurchaseOrder source : orders) {

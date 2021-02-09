@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author seven
  */
 
-@Api("模块服务")
+@Api(tags = "模块服务")
 @RestController
 @RequestMapping(value = "module", produces = "application/json;charset=utf-8")
 public class ModuleController {

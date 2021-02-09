@@ -8,9 +8,12 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/db_flowable?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
+#    url: jdbc:mysql://127.0.0.1:3306/db_flowable?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: root
+    url: jdbc:mysql://39.108.217.19:3307/flowable?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: dev
+    password: searly20190123
 #  jpa:
 #    hibernate:
 #      ddl-auto: update
